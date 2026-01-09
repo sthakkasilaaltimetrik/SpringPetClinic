@@ -1,31 +1,44 @@
-pipeline{
+pipeline {
     
     agent any
-    tools {maven "M3"}
+    tools {maven "mavenV4"}
     stages{
+        
         stage("checkout"){
-            steps {
-                git branch: "main", url: "https://github.com/sthakkasilaaltimetrik/SpringPetClinic.git"
+            
+            steps{
+                git branch:"main", url: "https://github.com/sthakkasilaaltimetrik/SpringPetClinic.git"
             }
         }
+        
         stage("build"){
-            steps {
+            
+            steps{
                 sh "mvn compile"
             }
         }
+        
         stage("test"){
-            steps {
+            
+            steps{
+                
                 sh "mvn test"
             }
         }
+        
         stage("package"){
-            steps {
+            
+            steps{
+                
                 sh "mvn package"
             }
         }
+        
         stage("deploy"){
-            steps {
-                sh "java -jar /home/coder/.jenkins/workspace/petclinicDiclarativePipeline/target/*.jar"
+            
+            steps{
+                
+                sh "java -jar ./target/*.jar"
             }
         }
     }
